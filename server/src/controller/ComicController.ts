@@ -32,6 +32,28 @@ class ComicController{
             return res.status(500).json({err})
         }
     }
+
+    static updateComic = async (req: Request, res: Response) => {
+        const { id } = req.params
+        try{
+            await Comic.updateOne({_id: id}, {$set: req.body})
+            return res.status(200).send()
+        }
+        catch(err){
+            res.status(500).json({err})
+        }
+    }
+
+    static deleteComic = async (req: Request, res: Response) => {
+        const { id } = req.params
+        try{
+            await Comic.deleteOne({_id: id})
+            return res.status(200).send()
+        }
+        catch(err){
+            res.status(500).json({err})
+        }
+    }
 }
 
 export { ComicController }
