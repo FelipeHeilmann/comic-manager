@@ -45,7 +45,6 @@ class AuthController{
         }
 
         const checkPass = await bcrypt.compare(password, user.password)
-        console.log(checkPass)
         
         if(!checkPass){
             return res.status(422).json({message: 'Email ou senha incorretos'})
@@ -59,8 +58,6 @@ class AuthController{
             email: user.email
         },SECRET!,{ expiresIn: 8400} 
         )
-
-        console.log(token)
 
         return res.status(200).json({
             token: token
