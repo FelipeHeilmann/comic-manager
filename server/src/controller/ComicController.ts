@@ -32,10 +32,14 @@ class ComicController{
                 isHardCover
             })
             
-            await comic.save()
-            await User.updateOne({_id}, {$push:{
-                comics: comic._id
-            }})
+            await Promise.all(
+                [
+                    comic.save(), User.updateOne({_id}, {$push:{
+                        comics: comic._id
+                    }})
+        
+                ]
+            ) 
             return res.status(201).json({
                 comic
             })
