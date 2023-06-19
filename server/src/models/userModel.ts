@@ -24,11 +24,13 @@ const userSchema = new mongoose.Schema(
         },
         comics: [{
             type: Schema.Types.ObjectId,
-            ref: 'comics'
+            ref: 'comics',
+            select: false
         }],
         created_at:{
             type: Date,
-            default: Date.now
+            default: Date.now,
+            select: false
         }
     },
     {

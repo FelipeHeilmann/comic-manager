@@ -1,9 +1,10 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "main": "src/server.js",
+  "main": "index.js",
   "license": "MIT",
-  "type": "module",
+  "keywords": [],
+  "author": "",
   "scripts": {
     "dev": "tsx watch src/server.ts"
   },
@@ -24,6 +25,7 @@
     "@typescript-eslint/eslint-plugin": "^5.59.11",
     "@typescript-eslint/parser": "^5.59.11",
     "eslint": "^8.43.0",
+    "ts-node": "^10.9.1",
     "tsx": "^3.12.7",
     "typescript": "^5.1.3"
   }

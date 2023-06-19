@@ -52,11 +52,13 @@ class AuthController{
 
         const SECRET = process.env.SECRET
         
-        const token = jwt.sign({
-            id: user._id,
-            name: user.name,
-            email: user.email
-        },SECRET!,{ expiresIn: 8400} 
+        const token = jwt.sign(
+            {
+                id: user._id.toString(),
+                name: user.name,
+                email: user.email
+            },SECRET!,
+            { expiresIn: 8400} 
         )
 
         return res.status(200).json({

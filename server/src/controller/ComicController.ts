@@ -1,16 +1,25 @@
 import { Request, Response } from 'express'
 import Comic from '../models/comicModel'
+import User from '../models/userModel'
+
+interface CustomRequest extends Request{
+    auth?: any
+
+}
 
 class ComicController{
-    static getComics = async (req: Request, res: Response) => {
-        const comics = await Comic.find()
+    static getComics = async (req: CustomRequest, res: Response) => {
+        const { _id } = req.auth
+
+        const comic = await User.find({_id}).select('comics').populate('comics')
         return res.status(200).json({
-            comics
+            comic
         })
     }
 
-    static createComic = async (req: Request, res: Response) => {
+    static createComic = async (req: CustomRequest, res: Response) => {
         const { tile, issueNumber, publication_year, isComplete, author, artist, isHardCover } = req.body
+        const { _id } = req.auth
 
         try{
             const comic = new Comic({
@@ -22,11 +31,15 @@ class ComicController{
                 artist, 
                 isHardCover
             })
-
+            
             await comic.save()
+            await User.updateOne({_id}, {$push:{
+                comics: comic._id
+            }})
             return res.status(201).json({
                 comic
             })
+
         }
         catch(err){
             return res.status(500).json({err})
