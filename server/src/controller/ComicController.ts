@@ -61,10 +61,14 @@ class ComicController{
         }
     }
 
-    static deleteComic = async (req: Request, res: Response) => {
+    static deleteComic = async (req: CustomRequest, res: Response) => {
+        const { _id } = req.auth
         const { id } = req.params
         try{
-            await Comic.deleteOne({_id: id})
+            await Promise.all([
+                Comic.deleteOne({_id: id}),
+                User.updateOne({_id}, {$pull: {comics: id}})
+            ])
             return res.status(200).send()
         }
         catch(err){
