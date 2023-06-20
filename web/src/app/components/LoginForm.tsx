@@ -2,6 +2,9 @@
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { api } from '../libs/api'
+import Cookies from 'js-cookie'
+import { useRouter } from 'next/navigation'
 
 const createUserLoginSchema = z.object({
   email: z
@@ -14,6 +17,7 @@ const createUserLoginSchema = z.object({
 type LoginUserFormData = z.infer<typeof createUserLoginSchema>
 
 export default function LoginForm() {
+  const router = useRouter()
   const {
     register,
     handleSubmit,
@@ -23,7 +27,25 @@ export default function LoginForm() {
   })
 
   const loginUser = (data: any) => {
-    console.log(data)
+    const { email, password } = data
+
+    const base64Credentials = btoa(email + ':' + password)
+    api
+      .post(
+        '/auth',
+        {},
+        {
+          headers: {
+            Authorization: `Basic ${base64Credentials}`,
+          },
+        },
+      )
+      .then((res) => {
+        const { token } = res.data
+        const cookieExpiresInSeconds = 60 * 60 * 24 * 30
+        Cookies.set('token', token, { expires: cookieExpiresInSeconds })
+        router.push('/main/')
+      })
   }
 
   return (

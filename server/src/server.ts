@@ -3,12 +3,13 @@ import 'dotenv/config'
 import { userRoutes } from './routes/userRoutes'
 import { connectToMongo } from './database'
 import { comicRoutes } from './routes/comicRoutes'
+import cors from 'cors'
 const routes = [userRoutes, comicRoutes]
 
 const app = express()
 const PORT = process.env.PORT
 
-app.use(express.json())
+app.use(express.json(), cors())
 connectToMongo()
 
 for(const route of routes){
