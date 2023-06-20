@@ -1,6 +1,6 @@
 export default function LoginForm() {
   return (
-    <form className=" flex w-full flex-col items-center space-y-5 px-10">
+    <form className=" flex h-full w-full flex-col items-center space-y-10">
       <h2 className="text-2xl font-bold text-black">Login</h2>
       <div className="flex w-full flex-col space-y-2">
         <label htmlFor="email" className="text-xl font-bold">
