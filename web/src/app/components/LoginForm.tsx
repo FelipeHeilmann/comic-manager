@@ -6,7 +6,7 @@ import { api } from '../libs/api'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
 
-const createUserLoginSchema = z.object({
+const LoginSchema = z.object({
   email: z
     .string()
     .nonempty('O email é obrigatório')
@@ -14,7 +14,7 @@ const createUserLoginSchema = z.object({
   password: z.string().nonempty('A senha é obrigatória'),
 })
 
-type LoginUserFormData = z.infer<typeof createUserLoginSchema>
+type LoginUserFormData = z.infer<typeof LoginSchema>
 
 export default function LoginForm() {
   const router = useRouter()
@@ -23,7 +23,7 @@ export default function LoginForm() {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginUserFormData>({
-    resolver: zodResolver(createUserLoginSchema),
+    resolver: zodResolver(LoginSchema),
   })
 
   const loginUser = (data: any) => {
