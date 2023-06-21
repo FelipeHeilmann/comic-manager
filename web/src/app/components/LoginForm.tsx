@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { api } from '../libs/api'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 const LoginSchema = z.object({
   email: z
@@ -17,6 +18,7 @@ const LoginSchema = z.object({
 type LoginUserFormData = z.infer<typeof LoginSchema>
 
 export default function LoginForm() {
+  const [errorMessage, setErrorMessage] = useState<String>('')
   const router = useRouter()
   const {
     register,
@@ -45,6 +47,10 @@ export default function LoginForm() {
         const cookieExpiresInSeconds = 60 * 60 * 24 * 30
         Cookies.set('token', token, { expires: cookieExpiresInSeconds })
         router.push('/main/')
+      })
+      .catch((err) => {
+        const { message } = err.response.data
+        setErrorMessage(message)
       })
   }
 
@@ -93,7 +99,11 @@ export default function LoginForm() {
         </button>
       </div>
 
-      <a className="font-bold text-black hover:text-gray-700" href="#">
+      {errorMessage && (
+        <span className="text-lg font-bold">{errorMessage}</span>
+      )}
+
+      <a className="font-bold text-black hover:text-gray-700" href="/signup/">
         Não Possui conta? Clique aqui para se cadastrar!
       </a>
     </form>
