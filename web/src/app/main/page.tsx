@@ -1,8 +1,6 @@
-'use client'
-import { useEffect, useState } from 'react'
 import { ProfileAside } from '../components/Profile/ProfileAside'
 import { api } from '../libs/api'
-import Cookies from 'js-cookie'
+import { cookies } from 'next/headers'
 
 interface Comic {
   name: string
@@ -10,28 +8,19 @@ interface Comic {
   created_at: string
 }
 
-export default function Home() {
-  const token = Cookies.get('token')
-  const [comics, setComics] = useState<Comic>()
-  useEffect(() => {
-    api
-      .get('/comics', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        setComics(res.data.comic[0])
-        console.log(comics)
-      })
-  }, [])
+export default async function Home() {
+  const token = cookies().get('token')?.value
+  const response = await api.get('/comics', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  const comics: Comic[] = response.data.comic[0].comics
+  console.log(comics)
   return (
     <main>
-      <ProfileAside
-        name={comics?.name}
-        created_at={comics?.created_at}
-        quantity={comics?.comics.length}
-      />
+      <ProfileAside quantity={comics.length} />
     </main>
   )
 }

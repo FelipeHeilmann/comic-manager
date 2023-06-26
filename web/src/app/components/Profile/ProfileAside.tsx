@@ -1,11 +1,13 @@
+import { getUser } from '@/app/libs/auth'
+
 interface Props {
-  name?: string
-  created_at?: string
   quantity?: number
 }
 
 // eslint-disable-next-line camelcase
-export function ProfileAside({ name, created_at, quantity }: Props) {
+export function ProfileAside({ quantity }: Props) {
+  // eslint-disable-next-line camelcase
+  const { name, created_at } = getUser()
   // eslint-disable-next-line camelcase
   const year = created_at ? new Date(created_at).getFullYear() : undefined
   return (
