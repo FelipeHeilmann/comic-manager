@@ -11,7 +11,7 @@ class ComicController{
     static getComics = async (req: CustomRequest, res: Response) => {
         const { _id } = req.auth
 
-        const comic = await User.find({_id}, {_id: false,email: false}).select(['comics', 'name', 'created_at']).populate('comics')
+        const comic = await User.find({_id}, {_id: false, email: false, created_at: false, name: false}).select(['comics']).populate('comics')
         return res.status(200).json({
             comic
         })

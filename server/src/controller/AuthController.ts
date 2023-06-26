@@ -56,7 +56,8 @@ class AuthController{
             {
                 id: user._id.toString(),
                 name: user.name,
-                email: user.email
+                email: user.email,
+                created_at: user.created_at
             },SECRET!,
             { expiresIn: 8400} 
         )
