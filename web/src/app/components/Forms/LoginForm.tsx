@@ -2,7 +2,7 @@
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { api } from '../libs/api'
+import { api } from '../../libs/api'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -57,11 +57,11 @@ export default function LoginForm() {
   return (
     <form
       onSubmit={handleSubmit(loginUser)}
-      className=" flex h-full w-full flex-col items-center space-y-10"
+      className=" flex h-fit w-fit flex-col items-center space-y-10 max-md:space-y-2"
     >
-      <h2 className="text-2xl font-bold text-black">Login</h2>
+      <h2 className="text-xl font-bold text-black">Login</h2>
       <div className="flex w-full flex-col space-y-2">
-        <label htmlFor="email" className="text-xl font-bold">
+        <label htmlFor="email" className="text-lg font-bold">
           Email
         </label>
         <input
@@ -76,7 +76,7 @@ export default function LoginForm() {
       </div>
 
       <div className="flex w-full flex-col space-y-2">
-        <label htmlFor="password" className="text-xl font-bold">
+        <label htmlFor="password" className="text-lg font-bold">
           Senha
         </label>
         <input

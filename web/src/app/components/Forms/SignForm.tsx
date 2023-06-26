@@ -2,8 +2,9 @@
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { api } from '../libs/api'
+import { api } from '../../libs/api'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 const CreateUserSchema = z.object({
   name: z.string().nonempty('O nome é obrigatório'),
@@ -17,6 +18,7 @@ const CreateUserSchema = z.object({
 type CreateUserFormData = z.infer<typeof CreateUserSchema>
 
 export default function SignForm() {
+  const router = useRouter()
   const [errorMessage, setErrorMessage] = useState<String>('')
   const {
     register,
@@ -30,7 +32,7 @@ export default function SignForm() {
     api
       .post('/auth/register', data)
       .then((res) => {
-        console.log(res)
+        router.push('/')
       })
       .catch((err) => {
         const { message } = err.response.data

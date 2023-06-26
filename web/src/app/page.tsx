@@ -1,18 +1,18 @@
-import LoginForm from './components/LoginForm'
+import LoginForm from './components/Forms/LoginForm'
 
 export default function Home() {
   return (
-    <main className="main-container flex h-screen items-center justify-center">
-      <div className="flex h-4/5 w-4/5 justify-center max-md:flex-col-reverse">
-        <div className="h-full w-full  p-5 max-lg:py-0">
-          <p className=" text-justify text-xl leading-relaxed text-white max-xl:text-base max-md:text-base">
+    <main className="main-container flex h-screen items-center justify-center overflow-hidden">
+      <div className="flex w-4/5 justify-center max-md:flex-col-reverse max-md:items-center">
+        <div className="h-full w-full pr-5">
+          <p className="text-justify text-xl leading-relaxed text-white max-xl:text-base max-md:text-center">
             Nossa aplicação foi cuidadosamente projetada para ajudar você a
             organizar e gerenciar sua coleção de quadrinhos de forma fácil e
             conveniente. Com nossa plataforma online, você terá total controle
             sobre os quadrinhos que possui, além de poder adicionar, editar e
             excluir itens com apenas alguns cliques.
           </p>
-          <p className="max-xl:text-2base text-justify text-xl leading-relaxed text-white max-md:text-base">
+          <p className="text-justify text-xl leading-relaxed text-white max-xl:text-base max-md:text-center">
             Não importa se você é um colecionador ávido ou está apenas começando
             sua coleção, nossa aplicação de organização de coleções de
             quadrinhos é a ferramenta perfeita para ajudá-lo a catalogar e
@@ -23,7 +23,7 @@ export default function Home() {
             como você organiza e desfruta de sua coleção.
           </p>
         </div>
-        <div className=" flex h-3/4 w-full justify-center bg-[#D9D9D9] bg-opacity-40 p-5">
+        <div className="flex w-full justify-center bg-[#D9D9D9] bg-opacity-40 py-5">
           <LoginForm />
         </div>
       </div>
