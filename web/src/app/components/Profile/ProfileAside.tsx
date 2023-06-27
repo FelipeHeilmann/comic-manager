@@ -1,4 +1,5 @@
 import { getUser } from '@/app/libs/auth'
+import { LogOut } from 'lucide-react'
 
 interface Props {
   quantity?: number
@@ -23,6 +24,15 @@ export function ProfileAside({ quantity }: Props) {
           <li>Marvel</li>
           <li>DC</li>
         </ul>
+      </div>
+      <div className="flex h-full w-full items-end justify-center">
+        <a
+          className="flex h-10 w-36 cursor-pointer justify-self-end bg-red-600 p-2 transition duration-300 ease-in-out hover:bg-red-700"
+          href="#"
+        >
+          <LogOut />
+          Quero sair
+        </a>
       </div>
     </aside>
   )
