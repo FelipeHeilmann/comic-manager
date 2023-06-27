@@ -28,7 +28,7 @@ export function ProfileAside({ quantity }: Props) {
       <div className="flex h-full w-full items-end justify-center">
         <a
           className="flex h-10 w-36 cursor-pointer justify-self-end bg-red-600 p-2 transition duration-300 ease-in-out hover:bg-red-700"
-          href="#"
+          href="/api/auth/logout"
         >
           <LogOut />
           Quero sair

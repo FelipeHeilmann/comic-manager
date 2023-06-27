@@ -60,7 +60,7 @@ export default function LoginForm() {
       className=" flex h-fit w-fit flex-col items-center space-y-10 max-md:space-y-2"
     >
       <h2 className="text-xl font-bold text-black">Login</h2>
-      <div className="flex w-full flex-col space-y-2">
+      <div className="flex w-full flex-col space-y-2 px-2">
         <label htmlFor="email" className="text-lg font-bold">
           Email
         </label>
@@ -75,7 +75,7 @@ export default function LoginForm() {
         )}
       </div>
 
-      <div className="flex w-full flex-col space-y-2">
+      <div className="flex w-full flex-col space-y-2 px-2">
         <label htmlFor="password" className="text-lg font-bold">
           Senha
         </label>
