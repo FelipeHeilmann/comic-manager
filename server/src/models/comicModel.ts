@@ -8,6 +8,9 @@ const comicSchema = new mongoose.Schema(
         title:{
             type: String,
         },
+        company:{
+            type: String
+        },
         pages:{
             type: Number
         },

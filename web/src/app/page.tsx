@@ -2,9 +2,9 @@ import LoginForm from './components/Forms/LoginForm'
 
 export default function Home() {
   return (
-    <main className="main-container flex h-screen items-center justify-center overflow-hidden">
+    <main className="main-container flex h-screen items-center justify-center">
       <div className="flex w-4/5 justify-center max-md:flex-col-reverse max-md:items-center">
-        <div className="h-full w-full pr-5">
+        <div className="h-full w-full pr-5 max-sm:hidden">
           <p className="text-justify text-xl leading-relaxed text-white max-xl:text-base max-md:text-center">
             Nossa aplicação foi cuidadosamente projetada para ajudar você a
             organizar e gerenciar sua coleção de quadrinhos de forma fácil e

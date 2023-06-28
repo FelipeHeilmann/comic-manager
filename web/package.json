@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "openmobile": "node ./node_modules/openmobile/ip.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.1.1",
@@ -31,6 +32,7 @@
   "devDependencies": {
     "@rocketseat/eslint-config": "^1.2.0",
     "@types/js-cookie": "^3.0.3",
+    "openmobile": "^1.0.6",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.3.0"
   }

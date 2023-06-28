@@ -18,18 +18,19 @@ class ComicController{
     }
 
     static createComic = async (req: CustomRequest, res: Response) => {
-        const { tile, issueNumber, publication_year, isComplete, author, artist, isHardCover } = req.body
+        const { title, issueNumber, publication_year, isComplete, company,  author, artist, isHardCover } = req.body
         const { _id } = req.auth
 
         try{
             const comic = new Comic({
-                tile, 
+                title, 
                 issueNumber, 
                 publication_year, 
                 isComplete, 
                 author, 
                 artist, 
-                isHardCover
+                isHardCover,
+                company
             })
             
             await Promise.all(

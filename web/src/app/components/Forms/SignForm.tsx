@@ -40,7 +40,7 @@ export default function SignForm() {
       })
   }
   return (
-    <div className="h-auto w-2/4 bg-[#d9d9d9] bg-opacity-50 p-6">
+    <div className="h-auto w-2/4 bg-[#d9d9d9] bg-opacity-50 p-6 max-md:w-4/5">
       <form
         onSubmit={handleSubmit(createUser)}
         className=" flex h-full w-full flex-col items-center space-y-10"

@@ -1,12 +1,18 @@
 import { EmptyComicsList } from '../components/EmpyComicsList'
+import { Comic } from '../components/Profile/Comic'
 import { ProfileAside } from '../components/Profile/ProfileAside'
 import { api } from '../libs/api'
 import { cookies } from 'next/headers'
 
-interface Comic {
-  name: string
-  comics: []
-  created_at: string
+interface Comics {
+  _id: string
+  title: string
+  company: string
+  issueNumber: number
+  publication_year: 1990
+  author: string
+  artist: string
+  isHardCover: boolean
 }
 
 export default async function Home() {
@@ -17,13 +23,26 @@ export default async function Home() {
     },
   })
 
-  const comics: Comic[] = response.data.comic[0].comics
+  const comics: Comics[] = response.data.comic[0].comics
 
   return (
     <main className="flex">
       <ProfileAside quantity={comics.length} />
-      <section className="flex-1 p-5">
-        {comics.length > 0 ? <h2>Ola</h2> : <EmptyComicsList />}
+      <section className="flex flex-1 flex-wrap gap-5 p-5">
+        {comics.length > 0 ? (
+          comics.map((comic) => {
+            return (
+              <Comic
+                key={comic._id}
+                company={comic.company}
+                title={comic.title}
+              />
+            )
+          })
+        ) : (
+          <EmptyComicsList />
+        )}
+        <EmptyComicsList />
       </section>
     </main>
   )
