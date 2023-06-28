@@ -9,7 +9,8 @@ interface Comics {
   title: string
   company: string
   issueNumber: number
-  publication_year: 1990
+  coverUrl: string
+  publication_year: number
   author: string
   artist: string
   isHardCover: boolean
@@ -24,6 +25,7 @@ export default async function Home() {
   })
 
   const comics: Comics[] = response.data.comic[0].comics
+  console.log(comics)
 
   return (
     <main className="flex">
@@ -36,6 +38,7 @@ export default async function Home() {
                 key={comic._id}
                 company={comic.company}
                 title={comic.title}
+                coverUrl={comic.coverUrl}
               />
             )
           })

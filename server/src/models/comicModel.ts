@@ -11,6 +11,9 @@ const comicSchema = new mongoose.Schema(
         company:{
             type: String
         },
+        coverUrl:{
+            type: String
+        },
         pages:{
             type: Number
         },

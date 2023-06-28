@@ -11,6 +11,7 @@ const app = express()
 const PORT = process.env.PORT
 
 app.use(express.json(), cors(), express.urlencoded({extended: true}))
+app.use('/files', express.static('uploads'))
 
 connectToMongo()
 

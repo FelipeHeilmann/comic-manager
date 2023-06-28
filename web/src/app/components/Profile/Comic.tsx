@@ -1,9 +1,10 @@
 interface Props {
   title: string
   company: string
+  coverUrl: string
 }
 
-export function Comic({ title, company }: Props) {
+export function Comic({ title, company, coverUrl }: Props) {
   const checkCompany = () => {
     switch (company) {
       case 'Marvel':
@@ -20,9 +21,19 @@ export function Comic({ title, company }: Props) {
         return 'bg-black'
     }
   }
+
+  const divStyle = {
+    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('${coverUrl}')`,
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+  }
+
   return (
-    <div className=" flex h-60 w-44 cursor-pointer flex-col items-center justify-end rounded-lg border-2 border-black bg-green-50 py-1">
-      <p>{title}</p>
+    <div
+      className={`flex h-60 w-44 cursor-pointer flex-col items-center justify-end rounded-lg border-2 border-black py-1`}
+      style={divStyle}
+    >
+      <p className="text-white">{title}</p>
       <p className={`h-fit ${checkCompany()} w-fit rounded-md  p-1 text-white`}>
         {company}
       </p>

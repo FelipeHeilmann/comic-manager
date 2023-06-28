@@ -18,7 +18,7 @@ class ComicController{
     }
 
     static createComic = async (req: CustomRequest, res: Response) => {
-        const { title, issueNumber, publication_year, isComplete, company,  author, artist, isHardCover } = req.body
+        const { title, issueNumber, publication_year, coverUrl ,isComplete, company,  author, artist, isHardCover } = req.body
         const { _id } = req.auth
 
         try{
@@ -30,7 +30,8 @@ class ComicController{
                 author, 
                 artist, 
                 isHardCover,
-                company
+                company, 
+                coverUrl
             })
             
             await Promise.all(
