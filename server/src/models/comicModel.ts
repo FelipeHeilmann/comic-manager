@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+const Schema = mongoose.Schema
 
 const comicSchema = new mongoose.Schema(
     {
@@ -34,6 +35,10 @@ const comicSchema = new mongoose.Schema(
         },
         isHardCover:{
             type: Boolean
+        },
+        userId:{
+            type: Schema.Types.ObjectId,
+            ref: 'user',
         }
     },
     {

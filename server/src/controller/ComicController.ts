@@ -5,33 +5,32 @@ import { NotFoundError } from '../helpers/api-error'
 
 interface CustomRequest extends Request{
     auth?: any
-
 }
 
 class ComicController{
     static getComics = async (req: CustomRequest, res: Response) => {
+        const { page = 1, limit = 5} = req.query
         const { _id } = req.auth
 
-        const comic = await User.find({_id}, {_id: false, email: false, created_at: false, name: false}).select(['comics']).populate('comics')
+        const comics = await Comic.find({userId: _id}, { userId: false })
+            .skip((Number(page)-1) * Number(limit))
+            .limit(Number(limit))
+            
         return res.status(200).json({
-            comic
+            comics
         })
     }
 
     static getComicId = async (req: CustomRequest, res: Response) => {
-        const { _id } = req.auth
         const { id } = req.params
 
-        const comic = await User.findById(_id, {_id: false, email: false, created_at: false, name: false}).select(['comics']).populate({
-            path: 'comics',
-            match: { _id: id }, 
-        }) 
+        const comic = await Comic.findById({_id: id})
 
         if(!comic){
             throw new NotFoundError('Quadrinho não encontado')
         }
 
-        return res.json(comic)
+        return res.status(200).json(comic)
     }
 
     static createComic = async (req: CustomRequest, res: Response) => {
@@ -47,17 +46,11 @@ class ComicController{
             artist, 
             isHardCover,
             company, 
-            coverUrl
+            coverUrl,
+            userId: _id
         })
             
-        await Promise.all(
-            [
-                comic.save(), User.updateOne({_id}, {$push:{
-                    comics: comic._id
-                }})
-        
-            ]
-        ) 
+        await comic.save()
         return res.status(201).json({
             comic
         })
@@ -65,10 +58,10 @@ class ComicController{
         
     }
 
-    static updateComic = async (req: Request, res: Response) => {
+    static updateComic = async (req: CustomRequest, res: Response) => {
         const { id } = req.params
         
-        const comic = Comic.findById({id})
+        const comic = Comic.findById({_id: id})
 
         if(!comic){
             throw new NotFoundError('Quadrinho não encontrado')
@@ -80,7 +73,6 @@ class ComicController{
     }
 
     static deleteComic = async (req: CustomRequest, res: Response) => {
-        const { _id } = req.auth
         const { id } = req.params
         
         const comic = Comic.findById({id})
@@ -89,10 +81,8 @@ class ComicController{
             throw new NotFoundError('Quadrinho não encontrado')
         }
         
-        await Promise.all([
-            Comic.deleteOne({_id: id}),
-            User.updateOne({_id}, {$pull: {comics: id}})
-        ])
+        await Comic.deleteOne({_id: id})
+
         return res.status(200).send()
     }
         

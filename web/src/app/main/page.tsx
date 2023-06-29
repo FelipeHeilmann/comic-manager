@@ -24,8 +24,8 @@ export default async function Home() {
     },
   })
 
-  const comics: Comics[] = response.data.comic[0].comics
-  console.log(comics)
+  const comics: Comics[] = response.data.comics
+  console.log(comics.length)
 
   return (
     <main className="flex">

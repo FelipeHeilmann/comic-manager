@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-const Schema = mongoose.Schema
 import bcrypt from 'bcrypt'
 
 const userSchema = new mongoose.Schema(
@@ -22,11 +21,6 @@ const userSchema = new mongoose.Schema(
             required: true,
             select: false
         },
-        comics: [{
-            type: Schema.Types.ObjectId,
-            ref: 'comics',
-            select: false
-        }],
         created_at:{
             type: Date,
             default: Date.now,
