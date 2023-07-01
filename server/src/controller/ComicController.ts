@@ -1,6 +1,5 @@
 import { Request, Response } from 'express'
 import Comic from '../models/comicModel'
-import User from '../models/userModel'
 import { NotFoundError } from '../helpers/api-error'
 
 interface CustomRequest extends Request{
@@ -34,7 +33,7 @@ class ComicController{
     }
 
     static createComic = async (req: CustomRequest, res: Response) => {
-        const { title, issueNumber, publication_year, coverUrl ,isComplete, company,  author, artist, isHardCover } = req.body
+        const { title, issueNumber = 1, publication_year, coverUrl, pages ,isComplete, company,  author, artist, isHardCover } = req.body
         const { _id } = req.auth
         
         const comic = new Comic({
@@ -46,6 +45,7 @@ class ComicController{
             artist, 
             isHardCover,
             company, 
+            pages,
             coverUrl,
             userId: _id
         })
