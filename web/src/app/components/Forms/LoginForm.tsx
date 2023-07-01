@@ -46,7 +46,7 @@ export default function LoginForm() {
         const { token } = res.data
         const cookieExpiresInSeconds = 60 * 60 * 24 * 30
         Cookies.set('token', token, { expires: cookieExpiresInSeconds })
-        router.push('/main/')
+        router.push('/comics/')
       })
       .catch((err) => {
         const { message } = err.response.data
