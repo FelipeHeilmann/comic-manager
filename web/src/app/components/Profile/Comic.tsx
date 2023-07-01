@@ -22,21 +22,25 @@ export function Comic({ title, company, coverUrl }: Props) {
     }
   }
 
-  const divStyle = {
-    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('${coverUrl}')`,
+  const imageStyle = {
+    backgroundImage: `url('${coverUrl}')`,
     backgroundPosition: 'center',
     backgroundSize: 'cover',
   }
 
   return (
     <div
-      className={`flex h-60 w-44 cursor-pointer flex-col items-center justify-end rounded-lg border-2 border-black py-1`}
-      style={divStyle}
+      className="parent relative flex h-60 w-44 cursor-pointer flex-col items-center justify-end rounded-lg border-2 border-black py-1"
+      style={imageStyle}
     >
-      <p className="text-white">{title}</p>
-      <p className={`h-fit ${checkCompany()} w-fit rounded-md  p-1 text-white`}>
-        {company}
-      </p>
+      <div className="content absolute bottom-0 left-0 flex h-0 w-full flex-col items-center justify-center gap-1 opacity-0">
+        <p className="text-center text-white">{title}</p>
+        <p
+          className={`h-fit ${checkCompany()} w-fit rounded-md  p-1 text-white`}
+        >
+          {company}
+        </p>
+      </div>
     </div>
   )
 }
