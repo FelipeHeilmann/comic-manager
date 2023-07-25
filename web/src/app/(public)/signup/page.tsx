@@ -1,4 +1,4 @@
-import SignForm from '../components/Forms/SignForm'
+import SignForm from '../../components/Forms/SignForm'
 
 export default function Home() {
   return (

@@ -1,7 +1,7 @@
-import { EmptyComicsList } from '../components/EmpyComicsList'
-import { Comic } from '../components/Profile/Comic'
-import { ProfileAside } from '../components/Profile/ProfileAside'
-import { api } from '../libs/api'
+import { EmptyComicsList } from '../../../components/EmpyComicsList'
+import { Comic } from '../../../components/Profile/Comic'
+import { ProfileAside } from '../../../components/Profile/ProfileAside'
+import { api } from '../../../libs/api'
 import { cookies } from 'next/headers'
 
 interface Comics {
@@ -25,7 +25,6 @@ export default async function Home() {
   })
 
   const comics: Comics[] = response.data.comics
-  console.log(comics.length)
 
   return (
     <main className="flex">
@@ -36,6 +35,7 @@ export default async function Home() {
             return (
               <Comic
                 key={comic._id}
+                _id={comic._id}
                 company={comic.company}
                 title={comic.title}
                 coverUrl={comic.coverUrl}

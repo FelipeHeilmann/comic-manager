@@ -1,10 +1,15 @@
+'use client'
+
+import Link from 'next/link'
+
 interface Props {
+  _id: string
   title: string
   company: string
   coverUrl: string
 }
 
-export function Comic({ title, company, coverUrl }: Props) {
+export function Comic({ _id, title, company, coverUrl }: Props) {
   const checkCompany = () => {
     switch (company) {
       case 'Marvel':
@@ -29,7 +34,8 @@ export function Comic({ title, company, coverUrl }: Props) {
   }
 
   return (
-    <div
+    <Link
+      href={`/comics/${_id}`}
       className="parent relative flex h-60 w-44 cursor-pointer flex-col items-center justify-end rounded-lg border-2 border-black py-1"
       style={imageStyle}
     >
@@ -41,6 +47,6 @@ export function Comic({ title, company, coverUrl }: Props) {
           {company}
         </p>
       </div>
-    </div>
+    </Link>
   )
 }

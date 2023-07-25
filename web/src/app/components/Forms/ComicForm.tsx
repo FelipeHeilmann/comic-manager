@@ -1,12 +1,12 @@
 'use client'
-import { FormEvent, useState } from "react"
+import { useState } from 'react'
 import { Camera, ArrowLeft } from 'lucide-react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { api } from "@/app/libs/api"
+import { api } from '@/app/libs/api'
 import Cookie from 'js-cookie'
-import { useRouter } from "next/navigation"
+import { useRouter } from 'next/navigation'
 
 const ComicSchema = z.object({
   title: z.string().nonempty('O campo título é obrigatório'),
@@ -18,9 +18,13 @@ const ComicSchema = z.object({
   isComplete: z.boolean(),
   issueNumber: z.string(),
   isHardCover: z.boolean(),
-  coverUrl: z.instanceof(FileList)
-    .transform(list => list.item(0))
-    .refine(file => file!.size <= 5 * 104 * 1024, 'O arquivo deve ter até 5MB')
+  coverUrl: z
+    .instanceof(FileList)
+    .transform((list) => list.item(0))
+    .refine(
+      (file) => file!.size <= 5 * 104 * 1024,
+      'O arquivo deve ter até 5MB',
+    ),
 })
 
 type ComicFormData = z.infer<typeof ComicSchema>
@@ -41,12 +45,24 @@ export function ComicForm() {
   })
 
   const createComic = async (data: ComicFormData) => {
-    let { title, company, author, artist, pages, isHardCover, isComplete, issueNumber, publication_year, coverUrl } = data;
+    const {
+      title,
+      company,
+      author,
+      artist,
+      pages,
+      isHardCover,
+      isComplete,
+      issueNumber,
+      // eslint-disable-next-line camelcase
+      publication_year,
+      coverUrl,
+    } = data
 
     const token = Cookie.get('token')
 
-    const formData = new FormData();
-    formData.append('file', coverUrl!);
+    const formData = new FormData()
+    formData.append('file', coverUrl!)
 
     const uploadResponse = await api.post('/upload', formData, {
       headers: {
@@ -56,45 +72,51 @@ export function ComicForm() {
 
     const coverUrlPath = `http://localhost:3333/files/${uploadResponse.data}`
 
-    await api.post('/newComic', {
-      title,
-      company,
-      author,
-      artist,
-      publication_year,
-      issueNumber,
-      isComplete,
-      pages,
-      isHardCover,
-      coverUrl: coverUrlPath
-    },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        }
-      }
-    ).then(res => {
-      router.push('/comics')
-    })
+    await api
+      .post(
+        '/newComic',
+        {
+          title,
+          company,
+          author,
+          artist,
+          // eslint-disable-next-line camelcase
+          publication_year,
+          issueNumber,
+          isComplete,
+          pages,
+          isHardCover,
+          coverUrl: coverUrlPath,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      )
+      .then((res) => {
+        router.push('/comics')
+      })
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(createComic)}
-      className="flex flex-col p-2" >
+    <form onSubmit={handleSubmit(createComic)} className="flex flex-col p-2">
       <a href="/comics">
         <ArrowLeft />
       </a>
       <h2 className="text-center text-lg">Novo quadrinho na sua coleção!</h2>
-      <div className="flex justify-between w-ful gap-2 p-2">
+      <div className="w-ful flex justify-between gap-2 p-2">
         <label htmlFor="title">Título</label>
         <input
           {...register('title')}
           type="text"
           id="title"
-          className="h-7 border-2 border-black pl-1" />
+          className="h-7 border-2 border-black pl-1"
+        />
       </div>
-      {errors.title && <span className="text-red-600">{errors.title.message}</span>}
+      {errors.title && (
+        <span className="text-red-600">{errors.title.message}</span>
+      )}
 
       <div className="flex justify-between p-2">
         <label htmlFor="company">Editora</label>
@@ -102,9 +124,12 @@ export function ComicForm() {
           {...register('company')}
           type="text"
           id="company"
-          className="h-7 border-2 border-black pl-1" />
+          className="h-7 border-2 border-black pl-1"
+        />
       </div>
-      {errors.company && <span className="text-red-600">{errors.company.message}</span>}
+      {errors.company && (
+        <span className="text-red-600">{errors.company.message}</span>
+      )}
 
       <div className="flex w-full justify-between gap-2 p-2">
         <label htmlFor="publication_year">Ano de publicação</label>
@@ -112,9 +137,12 @@ export function ComicForm() {
           {...register('publication_year')}
           type="number"
           id="publication_year"
-          className="h-7 border-2 border-black pl-1" />
+          className="h-7 border-2 border-black pl-1"
+        />
       </div>
-      {errors.publication_year && <span className="text-red-600">{errors.publication_year.message}</span>}
+      {errors.publication_year && (
+        <span className="text-red-600">{errors.publication_year.message}</span>
+      )}
 
       <div className="flex w-full justify-between gap-2 p-2">
         <label htmlFor="pages">Paginas</label>
@@ -122,10 +150,12 @@ export function ComicForm() {
           {...register('pages')}
           type="number"
           id="pages"
-          className="h-7 border-2 border-black pl-1" />
+          className="h-7 border-2 border-black pl-1"
+        />
       </div>
-      {errors.title && <span className="text-red-600">{errors.title.message}</span>}
-
+      {errors.title && (
+        <span className="text-red-600">{errors.title.message}</span>
+      )}
 
       <div className="flex w-full justify-between gap-2 p-2">
         <label htmlFor="author">Roteirista</label>
@@ -133,9 +163,12 @@ export function ComicForm() {
           {...register('author')}
           type="text"
           id="author"
-          className="h-7 border-2 border-black pl-1" />
+          className="h-7 border-2 border-black pl-1"
+        />
       </div>
-      {errors.title && <span className="text-red-600">{errors.title.message}</span>}
+      {errors.title && (
+        <span className="text-red-600">{errors.title.message}</span>
+      )}
 
       <div className="flex w-full justify-between gap-2 p-2">
         <label htmlFor="artist">Artista</label>
@@ -143,9 +176,12 @@ export function ComicForm() {
           {...register('artist')}
           type="text"
           id="artist"
-          className="h-7 border-2 border-black pl-1" />
+          className="h-7 border-2 border-black pl-1"
+        />
       </div>
-      {errors.artist && <span className="text-red-600">{errors.artist.message}</span>}
+      {errors.artist && (
+        <span className="text-red-600">{errors.artist.message}</span>
+      )}
 
       <div className="flex w-full justify-between gap-2 p-2">
         <label htmlFor="isComplete">História completa?</label>
@@ -154,39 +190,40 @@ export function ComicForm() {
           type="checkbox"
           id="isComplete"
           onChange={handleChange}
-          className="h-5 cursor-pointer w-5 rounded border-gray-400 bg-gray-700 text-purple-500"
+          className="h-5 w-5 cursor-pointer rounded border-gray-400 bg-gray-700 text-purple-500"
         />
       </div>
-      {errors.isComplete && <span className="text-red-600">{errors.isComplete.message}</span>}
+      {errors.isComplete && (
+        <span className="text-red-600">{errors.isComplete.message}</span>
+      )}
 
-      {
-        isComplete && (
-          <div className="flex w-full justify-between gap-2 p-2">
-            <label htmlFor="issueNumber">Número da edição</label>
-            <input
-              {...register('issueNumber')}
-              type="number"
-              id="issueNumber"
-              className="h-7 border-2 border-black pl-1" />
-            {errors.issueNumber && <span className="text-red-600">{errors.issueNumber.message}</span>}
-          </div>
-        )
-      }
+      {isComplete && (
+        <div className="flex w-full justify-between gap-2 p-2">
+          <label htmlFor="issueNumber">Número da edição</label>
+          <input
+            {...register('issueNumber')}
+            type="number"
+            id="issueNumber"
+            className="h-7 border-2 border-black pl-1"
+          />
+          {errors.issueNumber && (
+            <span className="text-red-600">{errors.issueNumber.message}</span>
+          )}
+        </div>
+      )}
 
       <div className="flex w-full justify-between gap-2 p-2">
-        <label
-          htmlFor="isHardCover"
-        >
-          Capa dura?
-        </label>
+        <label htmlFor="isHardCover">Capa dura?</label>
         <input
           {...register('isHardCover')}
           type="checkbox"
           id="isHardCover"
-          className="h-5 cursor-pointer w-5 rounded border-gray-400 bg-gray-700 text-purple-500"
+          className="h-5 w-5 cursor-pointer rounded border-gray-400 bg-gray-700 text-purple-500"
         />
       </div>
-      {errors.isHardCover && <span className="text-red-600">{errors.isHardCover.message}</span>}
+      {errors.isHardCover && (
+        <span className="text-red-600">{errors.isHardCover.message}</span>
+      )}
 
       <div className="flex w-full justify-between gap-2 p-2">
         <label htmlFor="">Foto do quadrinho</label>
@@ -194,18 +231,22 @@ export function ComicForm() {
           {...register('coverUrl')}
           accept="image/*"
           type="file"
-          id='image'
-          className="invisible" />
+          id="image"
+          className="invisible"
+        />
         <label htmlFor="image">
-          <Camera className="w-6 h-6 cursor-pointer" />
+          <Camera className="h-6 w-6 cursor-pointer" />
         </label>
       </div>
 
-      <div className="w-full flex justify-center">
+      <div className="flex w-full justify-center">
         <button
           type="submit"
-          className="p-2 bg-[#d9d9d9] w-32 font-bold uppercase transition duration-300 ease-in-out hover:bg-[#b5b0b0]">Salvar</button>
+          className="w-32 bg-[#d9d9d9] p-2 font-bold uppercase transition duration-300 ease-in-out hover:bg-[#b5b0b0]"
+        >
+          Salvar
+        </button>
       </div>
-    </form >
+    </form>
   )
 }
